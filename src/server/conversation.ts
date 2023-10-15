@@ -4,6 +4,7 @@ const serverURL = import.meta.env.VITE_REACT_APP_API_PROXY
 
 const PostConversationResponseSchema = z.object({
   response: z.string(),
+  suggestions: z.array(z.string()).optional(),
 })
 type PostConversationResponse = z.infer<typeof PostConversationResponseSchema>
 
@@ -15,10 +16,14 @@ const PostConversationRequestSchema = z.object({
 type PostConversationRequest = z.infer<typeof PostConversationRequestSchema>
 
 async function postConversation(
-  params: PostConversationRequest,
-  abortController: AbortController = new AbortController(),
+  params: PostConversationRequest & { abortController?: AbortController },
 ): Promise<PostConversationResponse> {
-  const { message, sessionID, clientID } = params
+  const {
+    message,
+    sessionID,
+    clientID,
+    abortController = new AbortController(),
+  } = params
 
   const response = await fetch(`${serverURL}/api/v1/conversation`, {
     method: 'POST',

@@ -1,6 +1,8 @@
+import { ConversationProvider } from '@contexts/conversation-provider.tsx'
 import { install } from '@twind/core'
 import { setup } from '@twind/preact'
 import { render } from 'preact'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import config from '../twind.config.js'
 import { App } from './app.tsx'
@@ -17,5 +19,10 @@ setup({
   /* other twind configuration options */
 })
 
-render(<App />, document.getElementById('app')!)
+render(
+  <ConversationProvider>
+    <App />
+  </ConversationProvider>,
+  document.getElementById('app')!,
+)
 

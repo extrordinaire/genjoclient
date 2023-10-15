@@ -13,18 +13,21 @@ const HTTP_MethodShema = z.enum([
 ])
 type HTTP_Method = z.infer<typeof HTTP_MethodShema>
 
-const EmmiterSchema = z.enum(['server', 'client'])
-type Emmiter = z.infer<typeof EmmiterSchema>
+enum Emmiter {
+  server = 'server',
+  client = 'client',
+}
+const EmmiterSchema = z.nativeEnum(Emmiter)
 
 const MessageSchema = z.object({
   emmiter: EmmiterSchema,
-  message: z.string(),
+  data: z.string(),
 })
 type Message = z.infer<typeof MessageSchema>
 
 const ConversationStatusSchema = z.enum(['idle', 'sending', 'sent', 'error'])
 type ConversationStatus = z.infer<typeof ConversationStatusSchema>
 
-export { MessageSchema }
-export type { ConversationStatus, Emmiter, HTTP_Method, Message }
+export { Emmiter, MessageSchema }
+export type { ConversationStatus, HTTP_Method, Message }
 
