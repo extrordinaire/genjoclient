@@ -38,8 +38,6 @@ async function sendMessage(params: { message: Message }) {
     })
 
     suggestions.value = response.suggestions || []
-
-    console.log(response)
   } catch (error) {
     console.error(error)
     throw error

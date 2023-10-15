@@ -39,9 +39,7 @@ const GenjoInput: FunctionComponent = () => {
 
     async function postMessage() {
       const prev_messageData = inputText.value
-      console.log(prev_messageData)
       inputText.value = ''
-      console.log(inputText.value)
 
       try {
         status.value = 'sending'
@@ -54,22 +52,23 @@ const GenjoInput: FunctionComponent = () => {
         status.value = 'sent'
       } catch (error) {
         status.value = 'error'
-        console.log('hello')
         inputText.value = prev_messageData
         console.error(error)
       }
     }
 
-    console.log(inputText.value)
-    console.log(isSubmittable.value, isSubmittable.peek())
-
     if (isSubmittable.value) postMessage()
+  }
+
+  function handleCancel(e: JSX.TargetedMouseEvent<HTMLElement>) {
+    e.preventDefault()
+    inputText.value = ''
   }
 
   return (
     <>
       {suggestions.value.length > 0 && (
-        <div tw={tw`flex flex-col`}>
+        <div tw={tw`flex flex-col mt-2`}>
           <p tw={tw`text-neutral-700 text-sm py-3 px-6 my-2 font-semibold`}>
             Related questions
           </p>
@@ -82,7 +81,7 @@ const GenjoInput: FunctionComponent = () => {
       )}
       <form
         onSubmit={handleSubmit}
-        tw={tw`bg-neutral-100 flex p-1 border-neutral-800 border-2 rounded-md w-[850px] max-w-full shadow-lg`}
+        tw={tw`bg-neutral-100 flex p-1 border-neutral-800 border-2 rounded-md w-[850px] max-w-full shadow-lg mt-2`}
         id='genjo-input-wrapper'
       >
         <input
@@ -91,12 +90,20 @@ const GenjoInput: FunctionComponent = () => {
           placeholder={'Ask your question here'}
           tw={tw`font-medium text-base basis-full min-w-0 outline-none bg-transparent pl-8 placeholder:text-opacity-70`}
           type='text'
+          value={inputText}
         />
-        {status.value === 'typing' && (
-          <button tw={tw`h-full  bg-red-600`}>erase</button>
+        {isSubmittable.value && (
+          <button
+            tw={tw`h-full aspect-square flex items-center justify-center p-2 border-2 mx-2 rounded-md border-neutral-900`}
+            onClick={handleCancel}
+            type='button'
+          >
+            <span class='material-icons'>backspace</span>
+          </button>
         )}
         <button
           tw={tw`rounded-md bg-neutral-800 px-8 py-3 text-neutral-100 uppercase`}
+          type='submit'
         >
           ask
         </button>
