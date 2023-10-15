@@ -94,11 +94,11 @@ const GenjoInput: FunctionComponent = () => {
         />
         {isSubmittable.value && (
           <button
-            tw={tw`h-full aspect-square flex items-center justify-center p-2 border-2 mx-2 rounded-md border-neutral-900`}
+            tw={tw`rounded-md bg-neutral-100 px-8 py-3 text-neutral-900 shadow-neutral-900 shadow-inner mx-2 uppercase`}
             onClick={handleCancel}
             type='button'
           >
-            <span class='material-icons'>backspace</span>
+            clear
           </button>
         )}
         <button
